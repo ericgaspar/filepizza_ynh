@@ -98,13 +98,13 @@ ynh_system_user_create --username=$app --home_dir=$final_path
 #=================================================
 # INSTALL ETHERPAD
 #=================================================
-ynh_script_progression --message="Installing Etherpad..." --weight=60
+ynh_script_progression --message="Installing instant.io..." --weight=60
 
 chown -R $app: $final_path
 
 pushd "$final_path" || ynh_die
  	ynh_use_nodejs
- 	ynh_exec_as $app npm install
+ 	npm install
 popd || ynh_die
 
 #=================================================
