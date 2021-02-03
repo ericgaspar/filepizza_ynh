@@ -104,7 +104,7 @@ chown -R $app: $final_path
 
 pushd "$final_path" || ynh_die
  	ynh_use_nodejs
- 	ynh_exec_as $app env "$ynh_node_load_PATH" npm install
+ 	ynh_exec_as $app npm install
 popd || ynh_die
 
 #=================================================
