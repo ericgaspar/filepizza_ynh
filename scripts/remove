@@ -44,7 +44,7 @@ ynh_remove_systemd_config
 #=================================================
 # REMOVE ETHERPAD MAIN DIR
 #=================================================
-ynh_script_progression --message="Removing Etherpad main directory..." --weight=3
+ynh_script_progression --message="Removing filepizza main directory..." --weight=3
 
 # Remove the app directory securely
 ynh_secure_remove --file="$final_path"
@@ -71,4 +71,4 @@ ynh_system_user_delete --username=$app
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Removal of Etherpad completed" --last
+ynh_script_progression --message="Removal of filepizza completed" --last

@@ -1,4 +1,4 @@
-# Etherpad-Lite pour YunoHost
+# FilePizza pour YunoHost
 
 [![Niveau d'intégration](https://dash.yunohost.org/integration/etherpad.svg)](https://dash.yunohost.org/appci/app/etherpad) ![](https://ci-apps.yunohost.org/ci/badges/etherpad.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/etherpad.maintain.svg)  
 [![Installer Etherpad-Lite avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=etherpad)
@@ -54,7 +54,6 @@ Vous pouvez accéder au panneau d'administration d'Etherpad à l'adresse `domain
 ## Liens
 
  * Reporter un bug : https://github.com/YunoHost-Apps/etherpad_ynh/issues
- * Site d'Etherpad : http://etherpad.org/
  * Dépôt GitHub de l'application : https://github.com/ether/etherpad-lite
  * Site de YunoHost : https://yunohost.org/
 

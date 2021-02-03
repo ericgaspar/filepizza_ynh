@@ -1,4 +1,4 @@
-# Etherpad-Lite for YunoHost
+# instant.io for YunoHost
 
 [![Integration level](https://dash.yunohost.org/integration/etherpad.svg)](https://dash.yunohost.org/appci/app/etherpad) ![](https://ci-apps.yunohost.org/ci/badges/etherpad.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/etherpad.maintain.svg)  
 [![Install Etherpad-Lite with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=etherpad)
@@ -44,8 +44,8 @@ You can access Etherpad's admin panel at `domain.tld/admin`. The configuration f
 
 #### Supported architectures
 
-* x86-64 - [![](https://ci-apps.yunohost.org/ci/logs/etherpad%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/etherpad/)
-* ARMv8-A - [![](https://ci-apps-arm.yunohost.org/ci/logs/etherpad%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/etherpad/)
+* x86-64 - [![](https://ci-apps.yunohost.org/ci/logs/filepizza%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/etherpad/)
+* ARMv8-A - [![](https://ci-apps-arm.yunohost.org/ci/logs/filepizza%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/etherpad/)
 
 ## Limitations
 
@@ -53,20 +53,19 @@ You can access Etherpad's admin panel at `domain.tld/admin`. The configuration f
 
 ## Links
 
- * Report a bug: https://github.com/YunoHost-Apps/etherpad_ynh/issues
- * Etherpad website: http://etherpad.org/
- * Upstream app repository: https://github.com/ether/etherpad-lite
+ * Report a bug: https://github.com/YunoHost-Apps/filepizza_ynh/issues
+ * Upstream app repository: https://github.com/kern/filepizza
  * YunoHost website: https://yunohost.org/
 
 ---
 
 ## Developers infos
 
-Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/etherpad_ynh/tree/testing).
+Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/filepizza_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
 ```
-sudo yunohost app install https://github.com/YunoHost-Apps/etherpad_ynh/tree/testing --debug
+sudo yunohost app install https://github.com/YunoHost-Apps/filepizza_ynh/tree/testing --debug
 or
-sudo yunohost app upgrade etherpad -u https://github.com/YunoHost-Apps/etherpad_ynh/tree/testing --debug
+sudo yunohost app upgrade filepizza -u https://github.com/YunoHost-Apps/filepizza_ynh/tree/testing --debug
 ```
