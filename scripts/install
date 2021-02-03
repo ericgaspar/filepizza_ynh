@@ -25,11 +25,7 @@ ynh_abort_if_errors
 
 domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
-admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
-language=$YNH_APP_ARG_LANGUAGE
-password=$YNH_APP_ARG_PASSWORD
-export=$YNH_APP_ARG_EXPORT
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -51,11 +47,7 @@ ynh_script_progression --message="Storing installation settings..." --weight=2
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=admin --value=$admin
 ynh_app_setting_set --app=$app --key=is_public --value=$is_public
-ynh_app_setting_set --app=$app --key=language --value=$language
-ynh_app_setting_set --app=$app --key=password --value=$password
-ynh_app_setting_set --app=$app --key=export --value=$export
 
 #=================================================
 # STANDARD MODIFICATIONS
@@ -71,34 +63,11 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=120
-
-if [ "$export" = "abiword" ]; then
-	ynh_install_app_dependencies $abiword_app_depencencies
-elif [ "$export" = "libreoffice" ]; then
-	ynh_install_app_dependencies $libreoffice_app_dependencies
-fi
-
-#=================================================
-# INSTALL DEPENDENCIES
-#=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=12
 
-ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
+#ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
 ynh_install_nodejs --nodejs_version=$nodejs_version
-
-#=================================================
-# CREATE A POSTQRESQL DATABASE
-#=================================================
-ynh_script_progression --message="Creating a PostgreSQL database..." --weight=5
-
-db_name=$(ynh_sanitize_dbid --db_name=$app)
-ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-ynh_psql_test_if_first_run
-ynh_psql_setup_db --db_user=$db_name --db_name=$db_name
-
-db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -107,7 +76,8 @@ ynh_script_progression --message="Setting up source files..." --weight=1
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$final_path"
+#ynh_setup_source --dest_dir="$final_path"
+git clone https://github.com/kern/filepizza.git "$final_path" --quiet
 
 #=================================================
 # NGINX CONFIGURATION
@@ -134,47 +104,18 @@ chown -R $app: $final_path
 
 pushd "$final_path" || ynh_die
  	ynh_use_nodejs
- 	ynh_exec_as $app env "$ynh_node_load_PATH" bin/installDeps.sh
- 	ynh_exec_warn_less ynh_exec_as $app env "$ynh_node_load_PATH" npm install ep_spellcheck ep_delete_empty_pads ep_subscript_and_superscript ep_headings2 ep_author_hover ep_markdown ep_comments_page ep_align ep_font_color ep_embedded_hyperlinks2
+ 	ynh_exec_as $app env "$ynh_node_load_PATH" npm install
+ 	ynh_exec_warn_less ynh_exec_as $app env "$ynh_node_load_PATH" npm run-script build
 popd || ynh_die
 
-#=================================================
-# MODIFY A CONFIG FILE
-#=================================================
-ynh_script_progression --message="Configuring Etherpad..." --weight=6
-
-cp ../conf/settings.json $final_path/settings.json
-
-ynh_replace_string --match_string="__PORT__"     --replace_string="$port"     --target_file="$final_path/settings.json"
-ynh_replace_string --match_string="__LANGUAGE__" --replace_string="$language" --target_file="$final_path/settings.json"
-if [ "$export" = "abiword" ]
-then
-	# Get AbiWord binary path
-	abiword_path=`which abiword`
-	# Set the path of AbiWord into Etherpad config
-	ynh_replace_string --match_string="\"abiword\" : null" --replace_string="\"abiword\" : \"$abiword_path\"" --target_file="$final_path/settings.json"
-elif [ "$export" = "libreoffice" ]
-then
-	# Get soffice binary path
-	soffice_path=`which soffice`
-	# Set the path of soffice into Etherpad config
-	ynh_replace_string --match_string="\"soffice\" : null" --replace_string="\"soffice\" : \"$soffice_path\"" --target_file="$final_path/settings.json"
-fi
-
-cp ../conf/credentials.json $final_path/credentials.json
-
-ynh_replace_string --match_string="__DB_NAME__"  --replace_string="$db_name"  --target_file="$final_path/credentials.json"
-ynh_replace_string --match_string="__DB_PWD__"   --replace_string="$db_pwd"   --target_file="$final_path/credentials.json"
-ynh_replace_string --match_string="__ADMIN__"    --replace_string="$admin"    --target_file="$final_path/credentials.json"
-ynh_replace_string --match_string="__PASSWORD__" --replace_string="$password" --target_file="$final_path/credentials.json"
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM
 #=================================================
 
 # Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum --file="$final_path/settings.json"
-ynh_store_file_checksum --file="$final_path/credentials.json"
+#ynh_store_file_checksum --file="$final_path/settings.json"
+
 
 #=================================================
 # GENERIC FINALIZATION
@@ -184,7 +125,6 @@ ynh_store_file_checksum --file="$final_path/credentials.json"
 
 # Set permissions to app files
 chown -R $app: $final_path
-chmod 600 $final_path/credentials.json
 
 #=================================================
 # SETUP SYSTEMD
@@ -207,7 +147,7 @@ yunohost service add $app --description="Collaborative editor" --log="/var/log/$
 ynh_script_progression --message="Starting a systemd service..." --weight=6
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match="Your Etherpad version is"
+ynh_systemd_action --service_name=$app --action=restart --log_path=systemd --line_match=""
 
 #=================================================
 # SETUP SSOWAT
@@ -219,9 +159,6 @@ if [ $is_public -eq 1 ]
 then
 	ynh_permission_update --permission="main" --add="visitors"
 fi
-
-# Only the admin can access the admin panel of the app (if the app has an admin panel)
-ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin
 
 #=================================================
 # RELOAD NGINX
