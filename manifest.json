@@ -1,6 +1,6 @@
 {
     "name": "instant.io",
-    "id": "instant.io",
+    "id": "instant",
     "packaging_format": 1,
     "description": {
         "en": "Online editor providing collaborative editing in real-time.",
@@ -37,8 +37,8 @@
                     "en": "Choose a path for instant.io",
                     "fr": "Choisissez un chemin pour instant.io"
                 },
-                "example": "/etherpad",
-                "default": "/etherpad"
+                "example": "/instant",
+                "default": "/instant"
             },
             {
                 "name": "is_public",

@@ -1,7 +1,7 @@
 # instant.io for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/etherpad.svg)](https://dash.yunohost.org/appci/app/etherpad) ![](https://ci-apps.yunohost.org/ci/badges/etherpad.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/etherpad.maintain.svg)  
-[![Install Etherpad-Lite with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=etherpad)
+[![Integration level](https://dash.yunohost.org/integration/instant.svg)](https://dash.yunohost.org/appci/app/instant) ![](https://ci-apps.yunohost.org/ci/badges/instant.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/instant.maintain.svg)  
+[![Install Etherpad-Lite with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=instant)
 
 *[Lire ce readme en français.](./README_fr.md)*
 
@@ -53,7 +53,7 @@ You can access Etherpad's admin panel at `domain.tld/admin`. The configuration f
 
 ## Links
 
- * Report a bug: https://github.com/YunoHost-Apps/filepizza_ynh/issues
+ * Report a bug: https://github.com/YunoHost-Apps/instant_ynh/issues
  * Upstream app repository: https://github.com/kern/filepizza
  * YunoHost website: https://yunohost.org/
 
@@ -61,11 +61,11 @@ You can access Etherpad's admin panel at `domain.tld/admin`. The configuration f
 
 ## Developers infos
 
-Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/filepizza_ynh/tree/testing).
+Please do your pull request to the [testing branch](https://github.com/YunoHost-Apps/instant_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
 ```
-sudo yunohost app install https://github.com/YunoHost-Apps/filepizza_ynh/tree/testing --debug
+sudo yunohost app install https://github.com/YunoHost-Apps/instant_ynh/tree/testing --debug
 or
-sudo yunohost app upgrade filepizza -u https://github.com/YunoHost-Apps/filepizza_ynh/tree/testing --debug
+sudo yunohost app upgrade instant s-u https://github.com/YunoHost-Apps/instant_ynh/tree/testing --debug
 ```
